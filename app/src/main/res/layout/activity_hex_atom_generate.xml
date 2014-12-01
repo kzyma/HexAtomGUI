@@ -1,0 +1,202 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context=".HexAtomGUIActivity" >
+
+    <RadioGroup
+        android:id="@+id/SelectorGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:orientation="vertical" >
+
+        <RadioButton
+            android:id="@+id/genA0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/Atom0" />
+
+        <RadioButton
+            android:id="@+id/genA1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/Atom1" />
+
+        <RadioButton
+            android:id="@+id/genA2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/Atom2" />
+
+        <RadioButton
+            android:id="@+id/genA3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/Atom3" />
+
+        <RadioButton
+            android:id="@+id/genA4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/Atom4" />
+
+        <RadioButton
+            android:id="@+id/genA5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/Atom5" />
+
+        <RadioButton
+            android:id="@+id/genA6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/Atom6" />
+
+        <RadioButton
+            android:id="@+id/genA7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/Atom7" />
+
+        <RadioButton
+            android:id="@+id/genA8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/Atom8" />
+
+        <RadioButton
+            android:id="@+id/genA9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/Atom9" />
+
+        <RadioButton
+            android:id="@+id/genA10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/Atom10" />
+
+        <RadioButton
+            android:id="@+id/genA11"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/Atom11" />
+
+        <RadioButton
+            android:id="@+id/genDiameter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Diameter" />
+    </RadioGroup>
+
+    <LinearLayout
+        android:id="@+id/CenterLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/SendDiameterButton"
+            android:layout_width="75dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center"
+            android:visibility="gone" />
+
+        <View
+            android:id="@+id/MapView"
+            android:layout_width="350dp"
+            android:layout_height="350dp"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/circle"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/seek_bar_row_height"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="15dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="10dp"
+                android:text="Tempo"/>
+
+            <com.hexatom.gui.hexatomgui.AtomSeekBar
+                android:id="@+id/TempoBar"
+                android:layout_width="@dimen/seek_bar_width"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical" />
+
+            <TextView
+                android:id="@+id/TempoProgress"
+                android:layout_width="@dimen/seek_bar_progress_width"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/border"
+                android:gravity="center"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/ResetButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:text="Reset" />
+
+    <LinearLayout
+        android:id="@+id/RandomLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="Random"/>
+
+        <ToggleButton
+            android:id="@+id/RandomToggleButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal" />
+        </LinearLayout>
+
+    <View
+        android:id="@+id/SwipeGestureView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/ResetButton"
+        android:layout_above="@id/RandomLayout"
+        android:layout_toRightOf="@id/CenterLayout" />
+
+</RelativeLayout>

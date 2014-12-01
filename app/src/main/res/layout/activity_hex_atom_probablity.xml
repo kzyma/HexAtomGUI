@@ -1,0 +1,403 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/HexAtomProbabilityLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="com.hexatom.gui.hexatomgui.HexAtomProbabilityActivity"
+    android:orientation="vertical" >
+
+    <RadioGroup
+        android:id="@+id/SelectorGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:orientation="horizontal" >
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:id="@+id/defaultButton"
+            android:text="@string/Atom0" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/Atom1" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/Atom2" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/Atom3" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/Atom4" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/Atom5" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/Atom6" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/Atom7" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/Atom8" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/Atom9" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/Atom10" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/Atom11" />
+
+    </RadioGroup>
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TableRow
+            android:paddingTop="@dimen/probability_layout_padding"
+            android:paddingBottom="@dimen/probability_layout_padding">
+            <LinearLayout
+                android:layout_height="@dimen/seek_bar_row_height"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="50sp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="PCD"/>
+
+                <SeekBar
+                    android:id="@+id/pcd"
+                    android:layout_width="@dimen/seek_bar_width"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"/>
+
+                <TextView
+                    android:id="@+id/PCDProgress"
+                    android:layout_width="@dimen/seek_bar_progress_width"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/border"
+                    android:gravity="center"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_height="@dimen/seek_bar_row_height"
+                android:layout_weight="1"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="50sp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="PMT"/>
+
+                <SeekBar
+                    android:id="@+id/pmt"
+                    android:layout_width="@dimen/seek_bar_width"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical" />
+
+                <TextView
+                    android:id="@+id/PMTProgress"
+                    android:layout_width="@dimen/seek_bar_progress_width"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/border"
+                    android:gravity="center"/>
+            </LinearLayout>
+        </TableRow>
+
+        <TableRow
+            android:paddingTop="@dimen/probability_layout_padding"
+            android:paddingBottom="@dimen/probability_layout_padding">
+            <LinearLayout
+                android:layout_height="@dimen/seek_bar_row_height"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="50sp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="PDE"/>
+
+                <SeekBar
+                    android:id="@+id/pde"
+                    android:layout_width="@dimen/seek_bar_width"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical" />
+
+                <TextView
+                    android:id="@+id/PDEProgress"
+                    android:layout_width="@dimen/seek_bar_progress_width"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/border"
+                    android:gravity="center"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_height="@dimen/seek_bar_row_height"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="50sp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="PST"/>
+
+                <SeekBar
+                    android:id="@+id/pst"
+                    android:layout_width="@dimen/seek_bar_width"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical" />
+
+                <TextView
+                    android:id="@+id/PSTProgress"
+                    android:layout_width="@dimen/seek_bar_progress_width"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/border"
+                    android:gravity="center"/>
+            </LinearLayout>
+        </TableRow>
+
+        <TableRow
+            android:paddingTop="@dimen/probability_layout_padding"
+            android:paddingBottom="@dimen/probability_layout_padding">
+            <LinearLayout
+                android:layout_height="@dimen/seek_bar_row_height"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="50sp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="PDF"/>
+
+                <SeekBar
+                    android:id="@+id/pdf"
+                    android:layout_width="@dimen/seek_bar_width"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical" />
+
+                <TextView
+                    android:id="@+id/PDFProgress"
+                    android:layout_width="@dimen/seek_bar_progress_width"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/border"
+                    android:gravity="center"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_height="@dimen/seek_bar_row_height"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="50sp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="PMU"/>
+
+                <SeekBar
+                    android:id="@+id/pmu"
+                    android:layout_width="@dimen/seek_bar_width"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical" />
+
+                <TextView
+                    android:id="@+id/PMUProgress"
+                    android:layout_width="@dimen/seek_bar_progress_width"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/border"
+                    android:gravity="center"/>
+            </LinearLayout>
+        </TableRow>
+
+        <TableRow
+            android:paddingTop="@dimen/probability_layout_padding"
+            android:paddingBottom="@dimen/probability_layout_padding">
+            <LinearLayout
+                android:layout_height="@dimen/seek_bar_row_height"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="50sp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="PFI"/>
+
+                <SeekBar
+                    android:id="@+id/pfi"
+                    android:layout_width="@dimen/seek_bar_width"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical" />
+
+                <TextView
+                    android:id="@+id/PFIProgress"
+                    android:layout_width="@dimen/seek_bar_progress_width"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/border"
+                    android:gravity="center"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_height="@dimen/seek_bar_row_height"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="50sp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="PFT"/>
+
+                <SeekBar
+                    android:id="@+id/pft"
+                    android:layout_width="@dimen/seek_bar_width"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical" />
+
+                <TextView
+                    android:id="@+id/PFTProgress"
+                    android:layout_width="@dimen/seek_bar_progress_width"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/border"
+                    android:gravity="center"/>
+            </LinearLayout>
+        </TableRow>
+
+        <TableRow
+            android:paddingTop="@dimen/probability_layout_padding"
+            android:paddingBottom="@dimen/probability_layout_padding">
+            <LinearLayout
+                android:layout_height="@dimen/seek_bar_row_height"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="50sp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="PFU"/>
+
+                <SeekBar
+                    android:id="@+id/pfu"
+                    android:layout_width="@dimen/seek_bar_width"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical" />
+
+                <TextView
+                    android:id="@+id/PFUProgress"
+                    android:layout_width="@dimen/seek_bar_progress_width"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/border"
+                    android:gravity="center"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_height="@dimen/seek_bar_row_height"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="50sp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="PVF"/>
+
+                <SeekBar
+                    android:id="@+id/pvf"
+                    android:layout_width="@dimen/seek_bar_width"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical" />
+
+                <TextView
+                    android:id="@+id/VF1Progress"
+                    android:layout_width="@dimen/seek_bar_progress_width"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/border"
+                    android:gravity="center"/>
+            </LinearLayout>
+        </TableRow>
+        <TableRow
+            android:paddingTop="@dimen/probability_layout_padding"
+            android:paddingBottom="@dimen/probability_layout_padding">>
+            <LinearLayout
+                android:layout_height="@dimen/seek_bar_row_height"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="50sp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="PXU"/>
+
+                <SeekBar
+                    android:id="@+id/pxu"
+                    android:layout_width="@dimen/seek_bar_width"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical" />
+
+                <TextView
+                    android:id="@+id/PXUProgress"
+                    android:layout_width="@dimen/seek_bar_progress_width"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/border"
+                    android:gravity="center"/>
+            </LinearLayout>
+        </TableRow>
+    </TableLayout>
+
+</LinearLayout>

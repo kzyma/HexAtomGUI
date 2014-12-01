@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">HexAtomGUI</string>
+    <string name="title_activity_connect_to_server">ConnectToServerActivity</string>
+    <string name="title_activity_hex_atom_generate">HexAtomGenerateActivity</string>
+    <string name="title_activity_hex_atom_probability">HexAtomProbabilityActivity</string>
+
+    <string name="Atom0">a0</string>
+    <string name="Atom1">a1</string>
+    <string name="Atom2">a2</string>
+    <string name="Atom3">a3</string>
+    <string name="Atom4">a4</string>
+    <string name="Atom5">a5</string>
+    <string name="Atom6">a6</string>
+    <string name="Atom7">a7</string>
+    <string name="Atom8">a8</string>
+    <string name="Atom9">a9</string>
+    <string name="Atom10">a10</string>
+    <string name="Atom11">a11</string>
+
+</resources>
