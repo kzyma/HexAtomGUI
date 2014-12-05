@@ -19,4 +19,7 @@
     <string name="Atom10">a10</string>
     <string name="Atom11">a11</string>
 
+    <string name="ip">Enter IP Address</string>
+    <string name="port">Enter Port</string>
+    <string name="connect">CONNECT</string>
 </resources>

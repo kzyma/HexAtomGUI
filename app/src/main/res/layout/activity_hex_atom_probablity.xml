@@ -8,109 +8,164 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="com.hexatom.gui.hexatomgui.HexAtomProbabilityActivity"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:background="#20BDFCC9"
+    android:weightSum="1">
 
     <RadioGroup
         android:id="@+id/SelectorGroup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:orientation="horizontal" >
+        android:orientation="horizontal"
+        android:layout_marginBottom="10dp">
 
-        <RadioButton
+        <ToggleButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:id="@+id/defaultButton"
+            android:id="@+id/a0"
+            android:textOff="0"
+            android:textOn="0"
+            android:onClick="onToggle"
             android:text="@string/Atom0" />
 
-        <RadioButton
+        <ToggleButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:id="@+id/a1"
+            android:textOff="1"
+            android:textOn="1"
+            android:onClick="onToggle"
             android:text="@string/Atom1" />
 
-        <RadioButton
+        <ToggleButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:id="@+id/a2"
+            android:textOff="2"
+            android:textOn="2"
+            android:onClick="onToggle"
             android:text="@string/Atom2" />
 
-        <RadioButton
+        <ToggleButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:id="@+id/a3"
+            android:textOff="3"
+            android:textOn="3"
+            android:onClick="onToggle"
             android:text="@string/Atom3" />
 
-        <RadioButton
+        <ToggleButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/Atom4" />
+            android:id="@+id/a4"
+            android:textOff="4"
+            android:textOn="4"
+            android:onClick="onToggle"
+            android:text="a4" />
 
-        <RadioButton
+        <ToggleButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:id="@+id/a5"
+            android:textOff="5"
+            android:textOn="5"
+            android:onClick="onToggle"
             android:text="@string/Atom5" />
 
-        <RadioButton
+        <ToggleButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:id="@+id/a6"
+            android:textOff="6"
+            android:textOn="6"
+            android:onClick="onToggle"
             android:text="@string/Atom6" />
 
-        <RadioButton
+        <ToggleButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:id="@+id/a7"
+            android:textOff="7"
+            android:textOn="7"
+            android:onClick="onToggle"
             android:text="@string/Atom7" />
 
-        <RadioButton
+        <ToggleButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:id="@+id/a8"
+            android:textOff="8"
+            android:textOn="8"
+            android:onClick="onToggle"
             android:text="@string/Atom8" />
 
-        <RadioButton
+        <ToggleButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:id="@+id/a9"
+            android:textOff="9"
+            android:textOn="9"
+            android:onClick="onToggle"
             android:text="@string/Atom9" />
 
-        <RadioButton
+        <ToggleButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:id="@+id/a10"
+            android:textOff="10"
+            android:textOn="10"
+            android:onClick="onToggle"
             android:text="@string/Atom10" />
 
-        <RadioButton
+        <ToggleButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:id="@+id/a11"
+            android:textOff="11"
+            android:textOn="11"
+            android:onClick="onToggle"
             android:text="@string/Atom11" />
 
     </RadioGroup>
 
     <TableLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="375dp"
+        android:layout_margin="0dp"
+        android:layout_marginTop="50dp">
 
-        <TableRow
-            android:paddingTop="@dimen/probability_layout_padding"
-            android:paddingBottom="@dimen/probability_layout_padding">
+        <TableRow android:layout_margin="0dp"
+            android:layout_height="wrap_content">
+
             <LinearLayout
-                android:layout_height="@dimen/seek_bar_row_height"
-                android:layout_weight="1"
-                android:orientation="horizontal">
+                android:background="@drawable/atom_probability_border"
+                android:layout_height="50dp"
+                android:orientation="horizontal"
+                android:layout_margin="5dp"
+                android:padding="5dp">
 
                 <TextView
                     android:layout_width="50sp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:text="PCD"/>
+                    android:text="PCD"
+                    android:layout_margin="5dp" />
 
-                <SeekBar
+                <com.hexatom.gui.hexatomgui.AtomProbabilitySeek
                     android:id="@+id/pcd"
                     android:layout_width="@dimen/seek_bar_width"
                     android:layout_height="wrap_content"
@@ -122,20 +177,24 @@
                     android:layout_height="match_parent"
                     android:layout_gravity="center_vertical"
                     android:background="@drawable/border"
-                    android:gravity="center"/>
+                    android:gravity="center"
+                    android:layout_margin="5dp" />
             </LinearLayout>
             <LinearLayout
-                android:layout_height="@dimen/seek_bar_row_height"
-                android:layout_weight="1"
-                android:orientation="horizontal" >
+                android:background="@drawable/atom_probability_border"
+                android:layout_height="50dp"
+                android:orientation="horizontal"
+                android:layout_margin="5dp"
+                android:padding="5dp">
 
                 <TextView
                     android:layout_width="50sp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:text="PMT"/>
+                    android:text="PMT"
+                    android:layout_margin="5dp" />
 
-                <SeekBar
+                <com.hexatom.gui.hexatomgui.AtomProbabilitySeek
                     android:id="@+id/pmt"
                     android:layout_width="@dimen/seek_bar_width"
                     android:layout_height="wrap_content"
@@ -147,25 +206,27 @@
                     android:layout_height="match_parent"
                     android:layout_gravity="center_vertical"
                     android:background="@drawable/border"
-                    android:gravity="center"/>
+                    android:gravity="center"
+                    android:layout_margin="5dp" />
             </LinearLayout>
         </TableRow>
 
-        <TableRow
-            android:paddingTop="@dimen/probability_layout_padding"
-            android:paddingBottom="@dimen/probability_layout_padding">
+        <TableRow android:layout_margin="0dp">
             <LinearLayout
-                android:layout_height="@dimen/seek_bar_row_height"
-                android:layout_weight="1"
-                android:orientation="horizontal">
+                android:background="@drawable/atom_probability_border"
+                android:layout_height="50dp"
+                android:orientation="horizontal"
+                android:layout_margin="5dp"
+                android:padding="5dp">
 
                 <TextView
                     android:layout_width="50sp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:text="PDE"/>
+                    android:text="PDE"
+                    android:layout_margin="5dp" />
 
-                <SeekBar
+                <com.hexatom.gui.hexatomgui.AtomProbabilitySeek
                     android:id="@+id/pde"
                     android:layout_width="@dimen/seek_bar_width"
                     android:layout_height="wrap_content"
@@ -177,20 +238,24 @@
                     android:layout_height="match_parent"
                     android:layout_gravity="center_vertical"
                     android:background="@drawable/border"
-                    android:gravity="center"/>
+                    android:gravity="center"
+                    android:layout_margin="5dp" />
             </LinearLayout>
             <LinearLayout
-                android:layout_height="@dimen/seek_bar_row_height"
-                android:layout_weight="1"
-                android:orientation="horizontal">
+                android:layout_height="50dp"
+                android:background="@drawable/atom_probability_border"
+                android:orientation="horizontal"
+                android:layout_margin="5dp"
+                android:padding="5dp">
 
                 <TextView
                     android:layout_width="50sp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:text="PST"/>
+                    android:text="PST"
+                    android:layout_margin="5dp" />
 
-                <SeekBar
+                <com.hexatom.gui.hexatomgui.AtomProbabilitySeek
                     android:id="@+id/pst"
                     android:layout_width="@dimen/seek_bar_width"
                     android:layout_height="wrap_content"
@@ -202,25 +267,27 @@
                     android:layout_height="match_parent"
                     android:layout_gravity="center_vertical"
                     android:background="@drawable/border"
-                    android:gravity="center"/>
+                    android:gravity="center"
+                    android:layout_margin="5dp" />
             </LinearLayout>
         </TableRow>
 
-        <TableRow
-            android:paddingTop="@dimen/probability_layout_padding"
-            android:paddingBottom="@dimen/probability_layout_padding">
+        <TableRow android:layout_margin="0dp">
             <LinearLayout
-                android:layout_height="@dimen/seek_bar_row_height"
-                android:layout_weight="1"
-                android:orientation="horizontal">
+                android:layout_height="50dp"
+                android:background="@drawable/atom_probability_border"
+                android:orientation="horizontal"
+                android:layout_margin="5dp"
+                android:padding="5dp">
 
                 <TextView
                     android:layout_width="50sp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:text="PDF"/>
+                    android:text="PDF"
+                    android:layout_margin="5dp" />
 
-                <SeekBar
+                <com.hexatom.gui.hexatomgui.AtomProbabilitySeek
                     android:id="@+id/pdf"
                     android:layout_width="@dimen/seek_bar_width"
                     android:layout_height="wrap_content"
@@ -232,158 +299,26 @@
                     android:layout_height="match_parent"
                     android:layout_gravity="center_vertical"
                     android:background="@drawable/border"
-                    android:gravity="center"/>
+                    android:gravity="center"
+                    android:layout_margin="5dp" />
             </LinearLayout>
+
             <LinearLayout
-                android:layout_height="@dimen/seek_bar_row_height"
-                android:layout_weight="1"
-                android:orientation="horizontal">
+                android:layout_height="50dp"
+                android:background="@drawable/atom_probability_border"
+                android:orientation="horizontal"
+                android:layout_margin="5dp"
+                android:padding="5dp"
+                android:layout_column="1">
 
                 <TextView
                     android:layout_width="50sp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:text="PMU"/>
+                    android:text="PXU"
+                    android:layout_margin="5dp" />
 
-                <SeekBar
-                    android:id="@+id/pmu"
-                    android:layout_width="@dimen/seek_bar_width"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical" />
-
-                <TextView
-                    android:id="@+id/PMUProgress"
-                    android:layout_width="@dimen/seek_bar_progress_width"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center_vertical"
-                    android:background="@drawable/border"
-                    android:gravity="center"/>
-            </LinearLayout>
-        </TableRow>
-
-        <TableRow
-            android:paddingTop="@dimen/probability_layout_padding"
-            android:paddingBottom="@dimen/probability_layout_padding">
-            <LinearLayout
-                android:layout_height="@dimen/seek_bar_row_height"
-                android:layout_weight="1"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="50sp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:text="PFI"/>
-
-                <SeekBar
-                    android:id="@+id/pfi"
-                    android:layout_width="@dimen/seek_bar_width"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical" />
-
-                <TextView
-                    android:id="@+id/PFIProgress"
-                    android:layout_width="@dimen/seek_bar_progress_width"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center_vertical"
-                    android:background="@drawable/border"
-                    android:gravity="center"/>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_height="@dimen/seek_bar_row_height"
-                android:layout_weight="1"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="50sp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:text="PFT"/>
-
-                <SeekBar
-                    android:id="@+id/pft"
-                    android:layout_width="@dimen/seek_bar_width"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical" />
-
-                <TextView
-                    android:id="@+id/PFTProgress"
-                    android:layout_width="@dimen/seek_bar_progress_width"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center_vertical"
-                    android:background="@drawable/border"
-                    android:gravity="center"/>
-            </LinearLayout>
-        </TableRow>
-
-        <TableRow
-            android:paddingTop="@dimen/probability_layout_padding"
-            android:paddingBottom="@dimen/probability_layout_padding">
-            <LinearLayout
-                android:layout_height="@dimen/seek_bar_row_height"
-                android:layout_weight="1"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="50sp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:text="PFU"/>
-
-                <SeekBar
-                    android:id="@+id/pfu"
-                    android:layout_width="@dimen/seek_bar_width"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical" />
-
-                <TextView
-                    android:id="@+id/PFUProgress"
-                    android:layout_width="@dimen/seek_bar_progress_width"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center_vertical"
-                    android:background="@drawable/border"
-                    android:gravity="center"/>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_height="@dimen/seek_bar_row_height"
-                android:layout_weight="1"
-                android:orientation="horizontal">
-                <TextView
-                    android:layout_width="50sp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:text="PVF"/>
-
-                <SeekBar
-                    android:id="@+id/pvf"
-                    android:layout_width="@dimen/seek_bar_width"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical" />
-
-                <TextView
-                    android:id="@+id/VF1Progress"
-                    android:layout_width="@dimen/seek_bar_progress_width"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center_vertical"
-                    android:background="@drawable/border"
-                    android:gravity="center"/>
-            </LinearLayout>
-        </TableRow>
-        <TableRow
-            android:paddingTop="@dimen/probability_layout_padding"
-            android:paddingBottom="@dimen/probability_layout_padding">>
-            <LinearLayout
-                android:layout_height="@dimen/seek_bar_row_height"
-                android:layout_weight="1"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="50sp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:text="PXU"/>
-
-                <SeekBar
+                <com.hexatom.gui.hexatomgui.AtomProbabilitySeek
                     android:id="@+id/pxu"
                     android:layout_width="@dimen/seek_bar_width"
                     android:layout_height="wrap_content"
@@ -395,9 +330,134 @@
                     android:layout_height="match_parent"
                     android:layout_gravity="center_vertical"
                     android:background="@drawable/border"
-                    android:gravity="center"/>
+                    android:gravity="center"
+                    android:layout_margin="5dp" />
             </LinearLayout>
         </TableRow>
+
+        <TableRow android:layout_margin="0dp"
+            android:layout_height="50dp">
+            <LinearLayout
+                android:layout_height="50dp"
+                android:background="@drawable/atom_probability_border"
+                android:orientation="horizontal"
+                android:layout_margin="5dp"
+                android:padding="5dp">
+
+                <TextView
+                    android:layout_width="50sp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="PFI"
+                    android:layout_margin="5dp" />
+
+                <com.hexatom.gui.hexatomgui.AtomProbabilitySeek
+                    android:id="@+id/pfi"
+                    android:layout_width="@dimen/seek_bar_width"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical" />
+
+                <TextView
+                    android:id="@+id/PFIProgress"
+                    android:layout_width="@dimen/seek_bar_progress_width"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/border"
+                    android:gravity="center"
+                    android:layout_margin="5dp" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_height="50dp"
+                android:background="@drawable/atom_probability_border"
+                android:orientation="horizontal"
+                android:layout_margin="5dp"
+                android:padding="5dp">
+
+                <TextView
+                    android:layout_width="50sp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="PFT"
+                    android:layout_margin="5dp" />
+
+                <com.hexatom.gui.hexatomgui.AtomProbabilitySeek
+                    android:id="@+id/pft"
+                    android:layout_width="@dimen/seek_bar_width"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical" />
+
+                <TextView
+                    android:id="@+id/PFTProgress"
+                    android:layout_width="@dimen/seek_bar_progress_width"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/border"
+                    android:gravity="center"
+                    android:layout_margin="5dp" />
+            </LinearLayout>
+        </TableRow>
+
+        <TableRow android:layout_margin="0dp">
+            <LinearLayout
+                android:layout_height="50dp"
+                android:background="@drawable/atom_probability_border"
+                android:orientation="horizontal"
+                android:layout_margin="5dp"
+                android:padding="5dp">
+
+                <TextView
+                    android:layout_width="50sp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="PFU"
+                    android:layout_margin="5dp" />
+
+                <com.hexatom.gui.hexatomgui.AtomProbabilitySeek
+                    android:id="@+id/pfu"
+                    android:layout_width="@dimen/seek_bar_width"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical" />
+
+                <TextView
+                    android:id="@+id/PFUProgress"
+                    android:layout_width="@dimen/seek_bar_progress_width"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/border"
+                    android:gravity="center"
+                    android:layout_margin="5dp" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_height="50dp"
+                android:background="@drawable/atom_probability_border"
+                android:orientation="horizontal"
+                android:layout_margin="5dp"
+                android:padding="5dp">
+                <TextView
+                    android:layout_width="50sp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="PVF"
+                    android:layout_margin="5dp" />
+
+                <com.hexatom.gui.hexatomgui.AtomProbabilitySeek
+                    android:id="@+id/pvf"
+                    android:layout_width="@dimen/seek_bar_width"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical" />
+
+                <TextView
+                    android:id="@+id/VF1Progress"
+                    android:layout_width="@dimen/seek_bar_progress_width"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/border"
+                    android:gravity="center"
+                    android:layout_margin="5dp" />
+            </LinearLayout>
+        </TableRow>
+        <TableRow android:layout_margin="0dp"><![CDATA[>
+            ]]></TableRow>
     </TableLayout>
 
 </LinearLayout>

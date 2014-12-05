@@ -1,26 +1,28 @@
 package com.hexatom.gui.hexatomgui;
 
-/**
- * Created by kaz002 on 11/26/14.
- */
-
-import android.widget.SeekBar;
 import android.content.Context;
 import android.util.AttributeSet;
+import android.view.KeyEvent;
+import android.widget.SeekBar;
 
-public class AtomSeekBar extends SeekBar implements ServerProxy.GuiUpdateCallback {
+import java.util.Vector;
+
+/**
+ * Created by kaz002 on 12/2/14.
+ */
+public class AtomProbabilitySeek extends SeekBar implements ServerProxy.GuiUpdateCallback{
 
     private boolean isUpdating = false;
 
-    public AtomSeekBar(Context context) {
+    public AtomProbabilitySeek(Context context) {
         super(context);
     }
 
-    public AtomSeekBar(Context context, AttributeSet attrs) {
+    public AtomProbabilitySeek(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public AtomSeekBar(Context context, AttributeSet attrs, int defStyle) {
+    public AtomProbabilitySeek(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
     }
 
@@ -40,3 +42,5 @@ public class AtomSeekBar extends SeekBar implements ServerProxy.GuiUpdateCallbac
     }
 
 }
+
+

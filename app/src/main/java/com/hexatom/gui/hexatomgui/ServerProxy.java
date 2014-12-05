@@ -21,6 +21,9 @@ import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 import android.os.Vibrator;
+import android.widget.RadioGroup;
+import android.view.View;
+import java.util.Vector;
 
 public class ServerProxy extends Service {
     //members associated with establishing a connection with the server
@@ -29,13 +32,15 @@ public class ServerProxy extends Service {
     private String OutIP;
     private String OutPort;
     private OSCPortIn receiver;
-    Handler handler;
-    Timer requestInformationTimer;
+    private Handler handler;
+    private Timer requestInformationTimer;
     private Integer seqNum;
 
     //callback's
-    GuiUpdateCallback tempoCallback;
-    GuiUpdateCallback messageReceivedCallback;
+    private GuiUpdateCallback tempoCallback;
+    private GuiUpdateCallback messageReceivedCallback;
+    private Vector<AtomProbabilitySeek> probabilityCallback;
+    private RadioGroup probRadioGroup;
 
     private final IBinder binder = new ServerBinder();
 
@@ -75,7 +80,7 @@ public class ServerProxy extends Service {
         if(requestInformationTimer == null)
         requestInformationTimer = new Timer();
         try {
-            requestInformationTimer.schedule(doAsynchronousTask,0,2500);
+            requestInformationTimer.schedule(doAsynchronousTask,0,2000);
         }catch(IllegalStateException e){
             Log.e("RequestTimer","Task was already scheduled or cancelled, timer was " +
                     "cancelled, or timer thread terminated");
@@ -93,9 +98,21 @@ public class ServerProxy extends Service {
         tempoCallback = callback;
     }
 
+    public void probabilityRegister(Vector<AtomProbabilitySeek> callback,
+                                    RadioGroup probRadioGroup){
+        this.probabilityCallback = callback;
+        this.probRadioGroup = probRadioGroup;
+    }
+
     private void updateTempo(String val){
         if(tempoCallback != null){
             tempoCallback.update(val);
+        }
+    }
+
+    private void updateProbability(int atom,int prob,int value){
+        if(probabilityCallback != null){
+            probabilityCallback.elementAt(prob).update(Integer.toString(value));
         }
     }
 
@@ -107,15 +124,23 @@ public class ServerProxy extends Service {
         if(messageReceivedCallback != null){
             messageReceivedCallback.update("");
         }
-        Vibrator v = (Vibrator) this.getSystemService(Context.VIBRATOR_SERVICE);
-        v.vibrate(100);
+        //Vibrator v = (Vibrator) this.getSystemService(Context.VIBRATOR_SERVICE);
+        //v.vibrate(100);
     }
 
     public void queryGameStateFromServer(){
-        this.sendMessage("qt");
+        if(this.tempoCallback != null){
+            this.sendMessage("qt");
+        }
+        if(this.probRadioGroup != null & this.probabilityCallback != null){
+            //get current selected index
+            int index = this.probRadioGroup.indexOfChild
+                    (probRadioGroup.findViewById(this.probRadioGroup.getCheckedRadioButtonId()));
+            this.sendMessage("qp"+Integer.toString(index));
+        }
     }
 
-    public void updateViews(java.util.Date time,OSCMessage message){
+    public synchronized void updateViews(java.util.Date time,OSCMessage message){
 
         Object [] args = message.getArguments();
 
@@ -127,17 +152,64 @@ public class ServerProxy extends Service {
 
         //message is for updating
         for (int i = 2; i < args.length ; i++) {
+
             try {
                 String arg = args[i].toString();
                 String msg = arg.substring(1, arg.length() - 1);
-                String delims = "=";
-                String[] KeyVal = msg.split(delims);
-                String key = KeyVal[0];
-                Log.e("OSCMessage:", key);
-                String value = KeyVal[1];
 
-                if (key.equals("tempo")) {
-                    updateTempo(value);
+                String delims = ",";
+                String[] delimArgs = msg.split(delims);
+
+                for(int j=0;j<delimArgs.length;j++) {
+                    delims = "=";
+                    String[] KeyVal = delimArgs[j].split(delims);
+                    String key = KeyVal[0].trim();
+                    String value = KeyVal[1].trim();
+                    if (key.equals("tempo")) {
+                        updateTempo(value);
+                    }else if(key.substring(0,Math.min(key.length(),3)).equals("pcd")){
+                        int val = (int)((new Float(value) * 100));
+                        int atom = Integer.parseInt(key.substring(3));
+                        updateProbability(atom,0,val);
+                    }else if(key.substring(0,Math.min(key.length(),3)).equals("pmt")){
+                        int val = (int)((new Float(value) * 100));
+                        int atom = Integer.parseInt(key.substring(3));
+                        updateProbability(atom,1,val);
+                    }else if(key.substring(0,Math.min(key.length(),3)).equals("pde")){
+                        int val = (int)((new Float(value) * 100));
+                        int atom = Integer.parseInt(key.substring(3));
+                        updateProbability(atom,2,val);
+                    }else if(key.substring(0,Math.min(key.length(),3)).equals("pst")){
+                        int val = (int)((new Float(value) * 100));
+                        int atom = Integer.parseInt(key.substring(3));
+                        updateProbability(atom,3,val);
+                    }else if(key.substring(0,Math.min(key.length(),3)).equals("pdf")){
+                        int val = (int)((new Float(value) * 100));
+                        int atom = Integer.parseInt(key.substring(3));
+                        updateProbability(atom,4,val);
+                    }else if(key.substring(0,Math.min(key.length(),3)).equals("pfi")){
+                        int val = (int)((new Float(value) * 100));
+                        int atom = Integer.parseInt(key.substring(3));
+                        updateProbability(atom,6,val);
+                    }else if(key.substring(0,Math.min(key.length(),3)).equals("pft")){
+                        int val = (int)((new Float(value) * 100));
+                        int atom = Integer.parseInt(key.substring(3));
+                        updateProbability(atom,7,val);
+                    }else if(key.substring(0,Math.min(key.length(),3)).equals("pfu")){
+                        int val = (int)((new Float(value) * 100));
+                        int atom = Integer.parseInt(key.substring(3));
+                        updateProbability(atom,8,val);
+                    }else if(key.substring(0,Math.min(key.length(),3)).equals("pvf")){
+                        int val = (int)((new Float(value) * 100));
+                        int atom = Integer.parseInt(key.substring(3));
+                        updateProbability(atom,9,val);
+                    }else if(key.substring(0,Math.min(key.length(),3)).equals("pxu")){
+                        int val = (int)((new Float(value) * 100));
+                        int atom = Integer.parseInt(key.substring(3));
+                        updateProbability(atom,10,val);
+                    }else{
+                        Log.d("Message Unknown", key+" "+value);
+                    }
                 }
             }catch(Exception ex){
                 //Log.e("Serverproxy.updateViews","Error.");

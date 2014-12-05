@@ -192,28 +192,21 @@ public class HexAtomGenerateActivity extends Activity
         else
         {
             float slope = determineSlope(startX, startY, endX, endY);
-            if(slope < -2 || slope > 2)
+            if(slope < -2.5 || slope > 2.5)
             {
                 if(endY > startY)
                     direction = "n";
                 else
                     direction = "s";
             }
-            else if(slope > .5 && slope < 2)
+            else if(slope > 0 && slope < 2.5)
             {
                 if(endY > startY)
                     direction = "ne";
                 else
                     direction = "sw";
             }
-            else if(slope < .5 && slope > -.5)
-            {
-                if(endX > startX)
-                    direction = "ne";
-                else
-                    direction = "nw";
-            }
-            else if(slope < -.5 && slope > -2)
+            else if(slope < 0 && slope > -2.5)
             {
                 if(endY > startY)
                     direction = "nw";
@@ -266,12 +259,12 @@ public class HexAtomGenerateActivity extends Activity
             HexAtomGenerateActivity.serverProxy = binder.getService();
             HexAtomGenerateActivity.serverBound = true;
 
-            //Generate Callbacks
-            HexAtomGenerateActivity.serverProxy.tempoRegister(tempoBar);
-
             if (HexAtomGenerateActivity.serverProxy == null)
             {
                 Log.i("ConnectToServerActivity", "Bind to service ServerProxy was unsuccessful.");
+            }else{
+                //Generate Callbacks
+                HexAtomGenerateActivity.serverProxy.tempoRegister(tempoBar);
             }
         }
 
