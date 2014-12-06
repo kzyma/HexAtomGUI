@@ -121,14 +121,14 @@ public class HexAtomProbabilityActivity extends Activity
         probabilityTexts.add((TextView)findViewById(R.id.VF1Progress));
         probabilityTexts.add((TextView)findViewById(R.id.PXUProgress));
 
-        hexAtomProbabilityLayout.setOnTouchListener(new OnSwipeListener(this)
+        /*hexAtomProbabilityLayout.setOnTouchListener(new OnSwipeListener(this)
         {
             @Override
             public void onSwipeRight()
             {
                 onBackPressed();
             }
-        });
+        });*/
 
         this.probabilityValues = new Vector<Vector<Integer>>();
 

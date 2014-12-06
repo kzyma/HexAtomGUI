@@ -1,16 +1,25 @@
 package com.hexatom.gui.hexatomgui;
 
 import android.content.Context;
+import android.util.AttributeSet;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.LinearLayout;
 
-public class OnSwipeListener implements View.OnTouchListener
+public class OnSwipeListener extends LinearLayout implements View.OnTouchListener
 {
     private final GestureDetector gestureDetector;
 
-    public OnSwipeListener(Context context)
+    public OnSwipeListener(Context context, AttributeSet attrs) {
+
+        super(context, attrs);
+        gestureDetector = new GestureDetector(context, new GestureListener());
+    }
+
+    public OnSwipeListener(Context context, AttributeSet attrs, int defStyle)
     {
+        super(context, attrs, defStyle);
         gestureDetector = new GestureDetector(context, new GestureListener());
     }
 

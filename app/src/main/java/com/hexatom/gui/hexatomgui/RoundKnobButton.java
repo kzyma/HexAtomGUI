@@ -71,16 +71,16 @@ public class RoundKnobButton extends RelativeLayout implements OnGestureListener
     public RoundKnobButton(Context context) {
         super(context);
         // we won't wait for our size to be calculated, we'll just store out fixed size
-        int w=175;
-        int h=175;
+        int w=125;
+        int h=125;
         m_nWidth = w;
         m_nHeight = h;
-        int back = R.drawable.stator;
+        //int back = R.drawable.progress;
         int rotoron = R.drawable.rotoron;
         int rotoroff = R.drawable.rotoroff;
         // create stator
         ImageView ivBack = new ImageView(context);
-        ivBack.setImageResource(back);
+        //ivBack.setImageResource(back);
         RelativeLayout.LayoutParams lp_ivBack = new RelativeLayout.LayoutParams(w,h);
         lp_ivBack.addRule(RelativeLayout.CENTER_IN_PARENT);
         addView(ivBack, lp_ivBack);
@@ -118,17 +118,9 @@ public class RoundKnobButton extends RelativeLayout implements OnGestureListener
         this(context);
     }
 
-
-    /**
-     * math..
-     * @param x
-     * @param y
-     * @return
-     */
     private float cartesianToPolar(float x, float y) {
         return (float) -Math.toDegrees(Math.atan2(x - 0.5f, y - 0.5f));
     }
-
 
     @Override public boolean onTouchEvent(MotionEvent event) {
         if (gestureDetector.onTouchEvent(event)) return true;
@@ -156,14 +148,11 @@ public class RoundKnobButton extends RelativeLayout implements OnGestureListener
     }
 
     public void setRotorPosAngle(float deg) {
-
-        if (deg >= 210 || deg <= 150) {
-            if (deg > 180) deg = deg - 360;
-            Matrix matrix=new Matrix();
-            ivRotor.setScaleType(ScaleType.MATRIX);
-            matrix.postRotate((float) deg, m_nWidth/2, m_nHeight/2);//getWidth()/2, getHeight()/2);
-            ivRotor.setImageMatrix(matrix);
-        }
+        if (deg > 180) deg = deg - 360;
+        Matrix matrix=new Matrix();
+        ivRotor.setScaleType(ScaleType.MATRIX);
+        matrix.postRotate((float) deg, m_nWidth/2, m_nHeight/2);//getWidth()/2, getHeight()/2);
+        ivRotor.setImageMatrix(matrix);
     }
 
     public void setRotorPercentage(int percentage) {
@@ -182,19 +171,15 @@ public class RoundKnobButton extends RelativeLayout implements OnGestureListener
             // instead of getting 0-> 180, -180 0 , we go for 0 -> 360
             float posDegrees = rotDegrees;
             if (rotDegrees < 0) posDegrees = 360 + rotDegrees;
-
             // deny full rotation, start start and stop point, and get a linear scale
-            if (posDegrees > 210 || posDegrees < 150) {
-                // rotate our imageview
-                setRotorPosAngle(posDegrees);
-                // get a linear scale
-                float scaleDegrees = rotDegrees + 150; // given the current parameters, we go from 0 to 300
-                // get position percent
-                int percent = (int) (scaleDegrees / 3);
-                if (m_listener != null) m_listener.onRotate(percent);
-                return true; //consumed
-            } else
-                return false;
+            // rotate our imageview
+            setRotorPosAngle(posDegrees);
+            // get a linear scale
+            float scaleDegrees = rotDegrees + 150; // given the current parameters, we go from 0 to 300
+            // get position percent
+            int percent = (int) (scaleDegrees / 3);
+            if (m_listener != null) m_listener.onRotate(percent);
+            return true; //consumed
         } else
             return false; // not consumed
     }

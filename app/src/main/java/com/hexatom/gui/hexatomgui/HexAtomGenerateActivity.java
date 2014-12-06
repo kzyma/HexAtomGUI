@@ -19,7 +19,6 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
-
 public class HexAtomGenerateActivity extends Activity
 {
     private static final String TAG = "HexAtomGenerateActivity";
@@ -53,9 +52,9 @@ public class HexAtomGenerateActivity extends Activity
         selectorGroup = (RadioGroup)findViewById(R.id.SelectorGroup);
         mapView = findViewById(R.id.MapView);
         sendDiameterButton = (Button)findViewById(R.id.SendDiameterButton);
-        tempoBar = (AtomSeekBar)findViewById(R.id.TempoBar);
+        //tempoBar = (AtomSeekBar)findViewById(R.id.TempoBar);
         tempoProgress = (TextView)findViewById(R.id.TempoProgress);
-        swipeGestureView = findViewById(R.id.SwipeGestureView);
+        //swipeGestureView = findViewById(R.id.SwipeGestureView);
 
         scaleGestureDetector = new ScaleGestureDetector(this, new ScaleListener());
 
@@ -116,9 +115,9 @@ public class HexAtomGenerateActivity extends Activity
             }
         });
 
-        tempoBar.setMax(120);
+        //tempoBar.setMax(120);
 
-        tempoBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener()
+        /*tempoBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener()
         {
             int progress = 1;
 
@@ -147,14 +146,14 @@ public class HexAtomGenerateActivity extends Activity
             }
         });
 
-        swipeGestureView.setOnTouchListener(new OnSwipeListener(this)
+        /*swipeGestureView.setOnTouchListener(new OnSwipeListener(this)
         {
             @Override
             public void onSwipeLeft()
             {
                 loadProbabilityActivity();
             }
-        });
+        });*/
 
         //bind ServerProxy bound service.
         spIntent = new Intent(this,ServerProxy.class);
