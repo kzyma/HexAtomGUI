@@ -169,6 +169,7 @@ public class ServerProxy extends Service {
 
     private void updateTempo(String val){
         if(tempoCallback != null){
+            val = Integer.toString((int)((Float.parseFloat(val) / (float)1000)*100));
             tempoCallback.update(val);
         }
     }
@@ -193,6 +194,7 @@ public class ServerProxy extends Service {
 
     private void updateErasure(String val){
         if(erasureCallback != null){
+            val = Integer.toString((int)(((float)Integer.parseInt(val) / (float)255.0)*100));
             erasureCallback.update(val);
         }
     }
@@ -305,6 +307,8 @@ public class ServerProxy extends Service {
                         String intDelim = " ";
                         String[] temp = value.split(intDelim);
                         updateCurrentDiameter(temp[0]);
+                    }else if(key.substring(0,Math.min(key.length(),9)).equals("eraseRate")) {
+                        updateErasure(value);
                     }else{
                         Log.d("Message Unknown", key+" "+value);
                     }

@@ -89,22 +89,29 @@ public class HexAtomGenerateActivity extends Activity
 
         this.tempo = (RoundKnobButton)findViewById(R.id.tempo);
         this.tempoDisplay = (TextView)findViewById(R.id.tempo_display);
+        this.tempoDisplay.setText("1");
         this.rotation =(RoundKnobButton)findViewById(R.id.rotation);
         this.rotateDisplay = (TextView)findViewById(R.id.rotate_display);
+        this.rotateDisplay.setText("0");
         this.erasure = (RoundKnobButton)findViewById(R.id.erasure);
         this.erasureDisplay = (TextView)findViewById(R.id.erasure_display);
+        this.erasureDisplay.setText("0");
         this.quantum = (RoundKnobButton)findViewById(R.id.quantum);
         this.quantumDisplay = (TextView)findViewById(R.id.quantum_display);
+        this.quantumDisplay.setText("0");
         scaleGestureDetector = new ScaleGestureDetector(this, new ScaleListener());
 
         this.tempo.SetListener(new RoundKnobButton.RoundKnobButtonListener() {
            @Override
            public void onStateChange(boolean newstate){
-
+               if(!newstate){
+                   serverProxy.sendMessage("t"+tempoDisplay.getText());
+               }
            }
            @Override
            public void onRotate(int percentage){
                if(tempoDisplay != null) {
+                   percentage = (int)(((float)percentage/100.0)*1000);
                    tempoDisplay.setText(Integer.toString(percentage));
                }
            }
@@ -112,11 +119,14 @@ public class HexAtomGenerateActivity extends Activity
         this.rotation.SetListener(new RoundKnobButton.RoundKnobButtonListener() {
             @Override
             public void onStateChange(boolean newstate){
-
+                if(!newstate){
+                    rotation.update(Integer.toString(0));
+                }
             }
             @Override
             public void onRotate(int percentage){
                 if(rotateDisplay != null) {
+                    percentage = ((int)(((float)percentage/100.0)*359));
                     rotateDisplay.setText(Integer.toString(percentage));
                 }
             }
@@ -124,11 +134,14 @@ public class HexAtomGenerateActivity extends Activity
         this.quantum.SetListener(new RoundKnobButton.RoundKnobButtonListener() {
             @Override
             public void onStateChange(boolean newstate){
-
+                if(!newstate){
+                    quantum.update(Integer.toString(0));
+                }
             }
             @Override
             public void onRotate(int percentage){
                 if(quantumDisplay != null) {
+                    percentage = (int)(((float)percentage/100.0)*8);
                     quantumDisplay.setText(Integer.toString(percentage));
                 }
             }
@@ -136,11 +149,14 @@ public class HexAtomGenerateActivity extends Activity
         this.erasure.SetListener(new RoundKnobButton.RoundKnobButtonListener() {
             @Override
             public void onStateChange(boolean newstate){
-
+                if(!newstate){
+                    serverProxy.sendMessage("e"+erasureDisplay.getText());
+                }
             }
             @Override
             public void onRotate(int percentage){
                 if(erasureDisplay != null) {
+                    percentage = (int)(((float)percentage/100.0)*255);
                     erasureDisplay.setText(Integer.toString(percentage));
                 }
             }
@@ -250,11 +266,18 @@ public class HexAtomGenerateActivity extends Activity
 
         }
 
+        float xNorm = ((((startX - this.mapView.getX() )/(float)this.mapView.getWidth())))*2;
+        float yNorm = ((((startY - this.mapView.getY() )/(float)this.mapView.getHeight())))*2;
+        int xCord= (int) (xNorm * (Integer.parseInt(this.currentDiameterButton.getText().toString())/2));
+        int yCord= (int) (yNorm * (Integer.parseInt(this.currentDiameterButton.getText().toString())/2));
+
         for(int i=0;i<this.selectorGroup.getChildCount();i++) {
             if(((ToggleButton)this.selectorGroup.getChildAt(i)).isChecked()) {
                 String radioSelection = atomArray[i];
-                String message = radioSelection + direction + "0";
-                //Log.e("",message);
+                String message = radioSelection + direction + "0 @"+xCord+","+yCord+" "+"r"+
+                        this.rotateDisplay.getText()+
+                        "q"+quantumDisplay.getText();
+                Log.e("",message);
                 serverProxy.sendMessage(message);
             }
         }
@@ -318,7 +341,8 @@ public class HexAtomGenerateActivity extends Activity
                 Log.i("ConnectToServerActivity", "Bind to service ServerProxy was unsuccessful.");
             }else{
                 //Generate Callbacks
-                //HexAtomGenerateActivity.serverProxy.tempoRegister(tempoBar);
+                HexAtomGenerateActivity.serverProxy.tempoRegister(tempo);
+                HexAtomGenerateActivity.serverProxy.erasureRegister(erasure);
                 HexAtomGenerateActivity.serverProxy.maxDiameterRegister(maxDiameterButton);
                 HexAtomGenerateActivity.serverProxy.currentDiameterRegister(currentDiameterButton);
             }

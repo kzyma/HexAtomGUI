@@ -34,13 +34,14 @@ import android.view.MotionEvent;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.RelativeLayout;
+import android.util.Log;
 
 /**
  * @brief Potentiometer (pan-pot or otherwise called rotary knob) GUI element.
  *
  * RoundKnobButton is a custom GUI element to emulate a classic rotary knob.
  */
-public class RoundKnobButton extends RelativeLayout implements OnGestureListener {
+public class RoundKnobButton extends RelativeLayout implements OnGestureListener,ServerProxy.GuiUpdateCallback {
 
     private GestureDetector     gestureDetector;
     private float               mAngleDown , mAngleUp;
@@ -48,6 +49,7 @@ public class RoundKnobButton extends RelativeLayout implements OnGestureListener
     private Bitmap              bmpRotorOn , bmpRotorOff;
     private boolean             mState = false;
     private int                 m_nWidth = 0, m_nHeight = 0;
+    private boolean             updating = false;
 
     interface RoundKnobButtonListener {
         public void onStateChange(boolean newstate) ;
@@ -230,17 +232,15 @@ public class RoundKnobButton extends RelativeLayout implements OnGestureListener
     }
 
     public void setRotorPercentage(int percentage) {
-        int posDegree = percentage * 3 - 150;
+        int posDegree = percentage;
         if (posDegree < 0) posDegree = 360 + posDegree;
         setRotorPosAngle(posDegree);
     }
-
 
     public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
         float x = e2.getX() / ((float) getWidth());
         float y = e2.getY() / ((float) getHeight());
         float rotDegrees = cartesianToPolar(1 - x, 1 - y);// 1- to correct our custom axis direction
-
         if (! Float.isNaN(rotDegrees)) {
             // instead of getting 0-> 180, -180 0 , we go for 0 -> 360
             float posDegrees = rotDegrees;
@@ -249,9 +249,11 @@ public class RoundKnobButton extends RelativeLayout implements OnGestureListener
             // rotate our imageview
             setRotorPosAngle(posDegrees);
             // get a linear scale
-            float scaleDegrees = rotDegrees + 150; // given the current parameters, we go from 0 to 300
-            // get position percent
-            int percent = (int) (scaleDegrees / 3);
+            float scaleDegrees = rotDegrees + 360; // given the current parameters, we go from 0 to 300
+            if(scaleDegrees >= 360) scaleDegrees = scaleDegrees - 360;
+            //normalize to [0,1)
+            int percent = (int)(((float)(scaleDegrees)/
+                    ((float)360))*100);
             if (m_listener != null) m_listener.onRotate(percent);
             return true; //consumed
         } else
@@ -266,8 +268,14 @@ public class RoundKnobButton extends RelativeLayout implements OnGestureListener
 
     public void onLongPress(MotionEvent e) {    }
 
-
-
+    @Override
+    public void update(String value){
+        if(!mState){
+            float angle = (Integer.parseInt(value)/(float)100) * 360;
+            setRotorPosAngle(angle);
+            if (m_listener != null) m_listener.onRotate(Integer.parseInt(value));
+        }
+    }
 
 
 }
