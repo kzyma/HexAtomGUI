@@ -1,5 +1,11 @@
 package com.hexatom.gui.hexatomgui;
 
+/**
+ * @author  Cory Ma & Ken Zyma
+ * @version 1.0
+ * @since   2014-12-1
+ */
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ComponentName;
@@ -19,7 +25,13 @@ import android.os.StrictMode;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-
+/**
+ * @brief Activity for Connect to Server view.
+ *
+ * ConnectToServerActivity is the home screen for HexAtomGUI, where a user may connect to a
+ * hex atom server. IP and Port are verified and a service, ServerProxy, is started which
+ * handles all message i/o for the application.
+ */
 public class ConnectToServerActivity extends Activity
 {
     private static final String TAG = "ConnectToServerActivity";
@@ -61,17 +73,6 @@ public class ConnectToServerActivity extends Activity
     }
 
     @Override
-    protected void onStart(){super.onStart();}
-    @Override
-    protected void onRestart(){super.onRestart();}
-    @Override
-    protected void onResume(){super.onResume();}
-    @Override
-    protected void onPause(){super.onPause();}
-    @Override
-    protected void onStop(){super.onStop();}
-
-    @Override
     protected void onDestroy()
     {
         //unbind ServerProxy bound service.
@@ -83,6 +84,35 @@ public class ConnectToServerActivity extends Activity
         super.onDestroy();
     }
 
+    /**
+     * Listener for connect button. Checks for Valid IP address and Port number and starts
+     * HexAtomGenerateActivity if successful. If either IP or Port are invalid, then an error
+     * message is displayed.
+     */
+    View.OnClickListener connectButtonListener = new View.OnClickListener()
+    {
+        @Override
+        public void onClick(View view)
+        {
+            String ip = ipEntry.getText().toString();
+            String port = portEntry.getText().toString();
+            if(validateIP(ip) && validatePort(port))
+            {
+                writePreferences();
+                finish();
+                connectToServer(ip, port);
+                loadGenActivity();
+            }
+            else
+            {
+                buildErrorDialog();
+            }
+        }
+    };
+
+    /**
+     * Load HexAtomGenerateActivity and start the Activity.
+     */
     private void loadGenActivity()
     {
         Intent genActivityIntent = new Intent(this, HexAtomGenerateActivity.class);
@@ -109,14 +139,16 @@ public class ConnectToServerActivity extends Activity
      * Validate port number.
      * @param port port number for validation
      * @return true valid port number, false invalid port number
-     * @throws UnsupportedOperationException protocol for connecting is currently
-     * unspecified. Thus, port number cannot be validated to be in range.
      */
     private boolean validatePort(final String port) throws UnsupportedOperationException
     {
         return !port.isEmpty();
     }
 
+    /**
+     * Display an error dialog to the user that states there is an error connecting to
+     * the server.
+     */
     private void buildErrorDialog()
     {
         AlertDialog.Builder errorDialog = new AlertDialog.Builder(this);
@@ -126,6 +158,9 @@ public class ConnectToServerActivity extends Activity
                 .show();
     }
 
+    /**
+     * Write IP address and Port number to preferences file.
+     */
     private void writePreferences()
     {
         SharedPreferences.Editor hexAtomConfigEditor = hexAtomConfig.edit();
@@ -134,27 +169,11 @@ public class ConnectToServerActivity extends Activity
         hexAtomConfigEditor.apply();
     }
 
-    View.OnClickListener connectButtonListener = new View.OnClickListener()
-    {
-        @Override
-        public void onClick(View view)
-        {
-            String ip = ipEntry.getText().toString();
-            String port = portEntry.getText().toString();
-            if(validateIP(ip) && validatePort(port))
-            {
-                writePreferences();
-                finish();
-                connectToServer(ip, port);
-                loadGenActivity();
-            }
-            else
-            {
-                buildErrorDialog();
-            }
-        }
-    };
-
+    /**
+     * Set the credentials for the service ServerProxy to connect to the server over OSC/UDP.
+     * @param IP the Ip Address.
+     * @param Port the Port number.
+     */
     public void connectToServer(String IP, String Port)
     {
         if(this.serverBound)
@@ -169,9 +188,17 @@ public class ConnectToServerActivity extends Activity
         }
     }
 
+    /**
+     * Close the connection with the server. Note packets are currently being sent over UDP, there
+     * is no actual "connection" thus nothing has to be done to close. However, this is included
+     * so the necessary calls within source code in this module are already done if this protocol
+     * is ever changed.
+     */
     public void closeConnectionToServer(){}
 
-    /** Defines callbacks for server binding, passed to bindService() */
+    /**
+     * Defines callbacks for server binding, passed to bindService()
+     */
     private ServiceConnection serverConnection = new ServiceConnection()
     {
         @Override

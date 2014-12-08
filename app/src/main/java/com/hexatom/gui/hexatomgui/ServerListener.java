@@ -1,13 +1,18 @@
 package com.hexatom.gui.hexatomgui;
 
 /**
- * Created by kaz002 on 11/26/14.
+ * @author  Ken Zyma & Dr. Parson & the previous AtomGameController Project
+ * @version 1.0
+ * @since   2014-12-1
  */
 
 import android.content.Context;
 import com.illposed.osc.OSCListener;
 import com.illposed.osc.OSCMessage;
 
+/**
+ * ServerListener sets up a new thread for listening for incoming messages from the server.
+ */
 public class ServerListener implements OSCListener {
     private static ServerProxy parent;
 

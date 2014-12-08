@@ -1,5 +1,11 @@
 package com.hexatom.gui.hexatomgui;
 
+/**
+ * @author  Ken Zyma
+ * @version 1.0
+ * @since   2014-12-1
+ */
+
 import android.app.Service;
 import android.content.Intent;
 import android.net.wifi.WifiInfo;
@@ -15,16 +21,23 @@ import com.illposed.osc.OSCListener;
 import android.os.Handler;
 import java.util.Timer;
 import java.util.TimerTask;
-import android.content.Context;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
-import android.os.Vibrator;
 import android.widget.RadioGroup;
-import android.view.View;
 import java.util.Vector;
 
+/**
+ * @brief ServerProxy handles all messaging to and from the server.
+ *
+ * ServerProxy handles all messaging to and from the server. This is a long-standing thread
+ * which runs as a binded-service. After binding to this service an Activity (or other) should
+ * use setProxyCredentials(String IP, String Port) to first set ip and port for OSC/UDP communcation
+ * channel. Then the binded item may use sendMessage(String message) to send a message to the
+ * server, or may override the class GuiUpdateCallback for remote updating from the server
+ * by registering an element (which implements GuiUpdateCallback).
+ */
 public class ServerProxy extends Service {
     //members associated with establishing a connection with the server
     private String InIP;
@@ -37,13 +50,16 @@ public class ServerProxy extends Service {
     private Integer seqNum;
 
     //callback's
-    private GuiUpdateCallback tempoCallback;
-    private GuiUpdateCallback messageReceivedCallback;
-    private Vector<AtomProbabilitySeek> probabilityCallback;
+    private GuiUpdateCallback tempoCallback,messageReceivedCallback,maxDiameterCallback;
+    private GuiUpdateCallback currentDiameterCallback,erasureCallback;
+    private Vector<AtomSeekBar> probabilityCallback;
     private RadioGroup probRadioGroup;
 
     private final IBinder binder = new ServerBinder();
 
+    /**
+     * Initialize ServerProxy with empty credentials for connecting.
+     */
     public ServerProxy() {
         this.InIP = "";
         this.InPort = "";
@@ -54,6 +70,11 @@ public class ServerProxy extends Service {
         handler = new Handler();
     }
 
+    /**
+     * Set Port and IP of server for sending/receiving messages.
+     * @param IP
+     * @param Port
+     */
     public void setProxyCredentials(String IP, String Port) {
         this.OutIP = IP;
         this.OutPort = Port;
@@ -94,14 +115,56 @@ public class ServerProxy extends Service {
         public void update(String value);
     }
 
+    /**
+     * Register callback for updating HexAtom tempo information.
+     * @param callback
+     */
     public void tempoRegister(GuiUpdateCallback callback){
         tempoCallback = callback;
     }
 
-    public void probabilityRegister(Vector<AtomProbabilitySeek> callback,
+    /**
+     * Register callback for updating HexAtom probability information.
+     * @param callback seekbar's to be updated
+     * @param probRadioGroup a copy of atom selection group, so that only the
+     *                       atom currently displayed on screen is updated.
+     */
+    public void probabilityRegister(Vector<AtomSeekBar> callback,
                                     RadioGroup probRadioGroup){
         this.probabilityCallback = callback;
         this.probRadioGroup = probRadioGroup;
+    }
+
+    /**
+     * Register callback for updating HexAtom max diameter information.
+     * @param callback
+     */
+    public void maxDiameterRegister(GuiUpdateCallback callback){
+        this.maxDiameterCallback = callback;
+    }
+
+    /**
+     * Register callback for updating HexAtom current diameter information.
+     * @param callback
+     */
+    public void currentDiameterRegister(GuiUpdateCallback callback){
+        this.currentDiameterCallback = callback;
+    }
+
+    /**
+     * Register callback for updating HexAtom max erasure information.
+     * @param callback
+     */
+    public void erasureRegister(GuiUpdateCallback callback){
+        this.erasureCallback = callback;
+    }
+
+    /**
+     * Register callback to notify when a message was successfully received by the server.
+     * @param callback
+     */
+    public void messageReceivedRegister(GuiUpdateCallback callback){
+        messageReceivedCallback = callback;
     }
 
     private void updateTempo(String val){
@@ -116,8 +179,22 @@ public class ServerProxy extends Service {
         }
     }
 
-    public void messageReceivedRegister(GuiUpdateCallback callback){
-        messageReceivedCallback = callback;
+    private void updateMaxDiameter(String val){
+        if(maxDiameterCallback != null){
+            maxDiameterCallback.update(val);
+        }
+    }
+
+    private void updateCurrentDiameter(String val){
+        if(currentDiameterCallback != null){
+            currentDiameterCallback.update(val);
+        }
+    }
+
+    private void updateErasure(String val){
+        if(erasureCallback != null){
+            erasureCallback.update(val);
+        }
     }
 
     private void notifyMessageReceivedByServer(){
@@ -128,6 +205,10 @@ public class ServerProxy extends Service {
         //v.vibrate(100);
     }
 
+    /**
+     * Send a query message to the server to send back tempo, probability, diameter and erasure
+     * information.
+     */
     public void queryGameStateFromServer(){
         if(this.tempoCallback != null){
             this.sendMessage("qt");
@@ -138,8 +219,20 @@ public class ServerProxy extends Service {
                     (probRadioGroup.findViewById(this.probRadioGroup.getCheckedRadioButtonId()));
             this.sendMessage("qp"+Integer.toString(index));
         }
+        if((this.maxDiameterCallback != null) || (this.currentDiameterCallback != null)){
+            this.sendMessage("qd");
+        }
+        if(this.erasureCallback != null){
+            this.sendMessage("qe");
+        }
     }
 
+    /**
+     * Update views using the callback's which are currently registerd. An OSCMessage is parsed
+     * and appropriate function called to handle the message.
+     * @param time
+     * @param message
+     */
     public synchronized void updateViews(java.util.Date time,OSCMessage message){
 
         Object [] args = message.getArguments();
@@ -156,7 +249,6 @@ public class ServerProxy extends Service {
             try {
                 String arg = args[i].toString();
                 String msg = arg.substring(1, arg.length() - 1);
-
                 String delims = ",";
                 String[] delimArgs = msg.split(delims);
 
@@ -203,10 +295,16 @@ public class ServerProxy extends Service {
                         int val = (int)((new Float(value) * 100));
                         int atom = Integer.parseInt(key.substring(3));
                         updateProbability(atom,9,val);
-                    }else if(key.substring(0,Math.min(key.length(),3)).equals("pxu")){
-                        int val = (int)((new Float(value) * 100));
+                    }else if(key.substring(0,Math.min(key.length(),3)).equals("pxu")) {
+                        int val = (int) ((new Float(value) * 100));
                         int atom = Integer.parseInt(key.substring(3));
-                        updateProbability(atom,10,val);
+                        updateProbability(atom, 10, val);
+                    }else if(key.substring(0,Math.min(key.length(),11)).equals("diameterMax")) {
+                        updateMaxDiameter(value);
+                    }else if(key.substring(0,Math.min(key.length(),8)).equals("diameter")) {
+                        String intDelim = " ";
+                        String[] temp = value.split(intDelim);
+                        updateCurrentDiameter(temp[0]);
                     }else{
                         Log.d("Message Unknown", key+" "+value);
                     }
@@ -223,6 +321,10 @@ public class ServerProxy extends Service {
         handler.post(runnable);
     }
 
+    /**
+     * Check if all credentials for connection have been met.
+     * @return True if all connection credentials are met, false otherwise.
+     */
     public boolean isConnected(){
         if((this.InIP.equals("")) || (this.InPort.equals("")) || (this.OutIP.equals(""))
                 || (this.OutPort.equals("")) || (this.receiver == null)){
@@ -293,6 +395,9 @@ public class ServerProxy extends Service {
         return true;
     }
 
+    /**
+     * Timer for querying the server for information at regular intervals.
+     */
     TimerTask doAsynchronousTask = new TimerTask() {
         @Override
         public void run() {
@@ -323,11 +428,7 @@ public class ServerProxy extends Service {
         return binder;
     }
 
-
-    /**
-     * @return
-     */
-    public String getLocalIpAddress() {
+    private String getLocalIpAddress() {
         try {
             WifiManager wifiManager = (WifiManager) getSystemService(WIFI_SERVICE);
             WifiInfo wifiInfo = wifiManager.getConnectionInfo();
@@ -341,18 +442,11 @@ public class ServerProxy extends Service {
         return null;
     }
 
-    /**
-     *
-     * @param i
-     * @return
-     */
-    public String intToIp(int i) {
+    private String intToIp(int i) {
 
         return ((i & 0xFF) + "." +
                 ((i >> 8) & 0xFF) + "." +
                 ((i >> 16) & 0xFF) + "." +
                 ((i >> 24) & 0xFF));
-
-
     }
 }

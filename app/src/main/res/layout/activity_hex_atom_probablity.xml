@@ -165,7 +165,7 @@
                     android:text="PCD"
                     android:layout_margin="5dp" />
 
-                <com.hexatom.gui.hexatomgui.AtomProbabilitySeek
+                <com.hexatom.gui.hexatomgui.AtomSeekBar
                     android:id="@+id/pcd"
                     android:layout_width="@dimen/seek_bar_width"
                     android:layout_height="wrap_content"
@@ -194,7 +194,7 @@
                     android:text="PMT"
                     android:layout_margin="5dp" />
 
-                <com.hexatom.gui.hexatomgui.AtomProbabilitySeek
+                <com.hexatom.gui.hexatomgui.AtomSeekBar
                     android:id="@+id/pmt"
                     android:layout_width="@dimen/seek_bar_width"
                     android:layout_height="wrap_content"
@@ -226,7 +226,7 @@
                     android:text="PDE"
                     android:layout_margin="5dp" />
 
-                <com.hexatom.gui.hexatomgui.AtomProbabilitySeek
+                <com.hexatom.gui.hexatomgui.AtomSeekBar
                     android:id="@+id/pde"
                     android:layout_width="@dimen/seek_bar_width"
                     android:layout_height="wrap_content"
@@ -255,7 +255,7 @@
                     android:text="PST"
                     android:layout_margin="5dp" />
 
-                <com.hexatom.gui.hexatomgui.AtomProbabilitySeek
+                <com.hexatom.gui.hexatomgui.AtomSeekBar
                     android:id="@+id/pst"
                     android:layout_width="@dimen/seek_bar_width"
                     android:layout_height="wrap_content"
@@ -287,7 +287,7 @@
                     android:text="PDF"
                     android:layout_margin="5dp" />
 
-                <com.hexatom.gui.hexatomgui.AtomProbabilitySeek
+                <com.hexatom.gui.hexatomgui.AtomSeekBar
                     android:id="@+id/pdf"
                     android:layout_width="@dimen/seek_bar_width"
                     android:layout_height="wrap_content"
@@ -318,7 +318,7 @@
                     android:text="PXU"
                     android:layout_margin="5dp" />
 
-                <com.hexatom.gui.hexatomgui.AtomProbabilitySeek
+                <com.hexatom.gui.hexatomgui.AtomSeekBar
                     android:id="@+id/pxu"
                     android:layout_width="@dimen/seek_bar_width"
                     android:layout_height="wrap_content"
@@ -351,7 +351,7 @@
                     android:text="PFI"
                     android:layout_margin="5dp" />
 
-                <com.hexatom.gui.hexatomgui.AtomProbabilitySeek
+                <com.hexatom.gui.hexatomgui.AtomSeekBar
                     android:id="@+id/pfi"
                     android:layout_width="@dimen/seek_bar_width"
                     android:layout_height="wrap_content"
@@ -380,7 +380,7 @@
                     android:text="PFT"
                     android:layout_margin="5dp" />
 
-                <com.hexatom.gui.hexatomgui.AtomProbabilitySeek
+                <com.hexatom.gui.hexatomgui.AtomSeekBar
                     android:id="@+id/pft"
                     android:layout_width="@dimen/seek_bar_width"
                     android:layout_height="wrap_content"
@@ -412,7 +412,7 @@
                     android:text="PFU"
                     android:layout_margin="5dp" />
 
-                <com.hexatom.gui.hexatomgui.AtomProbabilitySeek
+                <com.hexatom.gui.hexatomgui.AtomSeekBar
                     android:id="@+id/pfu"
                     android:layout_width="@dimen/seek_bar_width"
                     android:layout_height="wrap_content"
@@ -440,7 +440,7 @@
                     android:text="PVF"
                     android:layout_margin="5dp" />
 
-                <com.hexatom.gui.hexatomgui.AtomProbabilitySeek
+                <com.hexatom.gui.hexatomgui.AtomSeekBar
                     android:id="@+id/pvf"
                     android:layout_width="@dimen/seek_bar_width"
                     android:layout_height="wrap_content"

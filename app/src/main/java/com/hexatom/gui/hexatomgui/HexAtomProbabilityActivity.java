@@ -1,5 +1,11 @@
 package com.hexatom.gui.hexatomgui;
 
+/**
+ * @author  Cory Ma & Ken Zyma & David Day
+ * @version 1.0
+ * @since   2014-12-5
+ */
+
 import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
@@ -19,11 +25,20 @@ import android.view.View;
 import android.content.SharedPreferences;
 import android.widget.ToggleButton;
 
+/**
+ * @brief Activity for altering atom probabilities.
+ *
+ * HexAtomProbabilityActivity is used for setting atom probabilities. This is bound to service
+ * ServerProxy for 'talking' with the Hex Atom server, which is used to send messages using
+ * ServerProxy.sendMessage(message) and updated from the server using callback routines which
+ * may be registered.
+ */
+
 public class HexAtomProbabilityActivity extends Activity
 {
     private static final String TAG = "HexAtomProbabilityActivity";
     LinearLayout hexAtomProbabilityLayout;
-    Vector<AtomProbabilitySeek> probabilityBars;
+    Vector<AtomSeekBar> probabilityBars;
     Vector<TextView> probabilityTexts;
     Vector<String> messageStrings;
     Vector<Vector<Integer>> probabilityValues;
@@ -84,16 +99,16 @@ public class HexAtomProbabilityActivity extends Activity
 
         hexAtomProbabilityLayout = (LinearLayout)findViewById(R.id.HexAtomProbabilityLayout);
 
-        probabilityBars.add((AtomProbabilitySeek)findViewById(R.id.pcd));
-        probabilityBars.add((AtomProbabilitySeek)findViewById(R.id.pmt));
-        probabilityBars.add((AtomProbabilitySeek)findViewById(R.id.pde));
-        probabilityBars.add((AtomProbabilitySeek)findViewById(R.id.pst));
-        probabilityBars.add((AtomProbabilitySeek)findViewById(R.id.pdf));
-        probabilityBars.add((AtomProbabilitySeek)findViewById(R.id.pfi));
-        probabilityBars.add((AtomProbabilitySeek)findViewById(R.id.pft));
-        probabilityBars.add((AtomProbabilitySeek)findViewById(R.id.pfu));
-        probabilityBars.add((AtomProbabilitySeek)findViewById(R.id.pvf));
-        probabilityBars.add((AtomProbabilitySeek)findViewById(R.id.pxu));
+        probabilityBars.add((AtomSeekBar)findViewById(R.id.pcd));
+        probabilityBars.add((AtomSeekBar)findViewById(R.id.pmt));
+        probabilityBars.add((AtomSeekBar)findViewById(R.id.pde));
+        probabilityBars.add((AtomSeekBar)findViewById(R.id.pst));
+        probabilityBars.add((AtomSeekBar)findViewById(R.id.pdf));
+        probabilityBars.add((AtomSeekBar)findViewById(R.id.pfi));
+        probabilityBars.add((AtomSeekBar)findViewById(R.id.pft));
+        probabilityBars.add((AtomSeekBar)findViewById(R.id.pfu));
+        probabilityBars.add((AtomSeekBar)findViewById(R.id.pvf));
+        probabilityBars.add((AtomSeekBar)findViewById(R.id.pxu));
 
         messageStrings.add("pcd");
         messageStrings.add("pmt");
@@ -121,14 +136,14 @@ public class HexAtomProbabilityActivity extends Activity
         probabilityTexts.add((TextView)findViewById(R.id.VF1Progress));
         probabilityTexts.add((TextView)findViewById(R.id.PXUProgress));
 
-        /*hexAtomProbabilityLayout.setOnTouchListener(new OnSwipeListener(this)
+        hexAtomProbabilityLayout.setOnTouchListener(new OnSwipeListener(this,null)
         {
             @Override
             public void onSwipeRight()
             {
                 onBackPressed();
             }
-        });*/
+        });
 
         this.probabilityValues = new Vector<Vector<Integer>>();
 
@@ -143,11 +158,6 @@ public class HexAtomProbabilityActivity extends Activity
         //bind ServerProxy bound service.
         spIntent = new Intent(this,ServerProxy.class);
         bindService(spIntent, serverConnection, Context.BIND_AUTO_CREATE);
-    }
-
-    public void onToggle(View view) {
-        atomSelectorGroup.check(view.getId());
-        ((ToggleButton)view).setChecked(true);
     }
 
     @Override
@@ -199,6 +209,10 @@ public class HexAtomProbabilityActivity extends Activity
         super.onDestroy();
     }
 
+    /**
+     * Save the state of probability data for atoms.
+     * @param savedInstanceState
+     */
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
         for(int i=0;i<this.probabilityValues.size();i++) {
@@ -211,6 +225,10 @@ public class HexAtomProbabilityActivity extends Activity
 
     }
 
+    /**
+     * Get the saved state of probability data of atoms.
+     * @param savedInstanceState
+     */
     @Override
     public void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
@@ -223,6 +241,22 @@ public class HexAtomProbabilityActivity extends Activity
         }
     }
 
+    /**
+     * Toggle a button on, and all others off. This is a helper function so that atomSelectorGroup
+     * can act like a radio button group, where if one is toggled 'on' all others should be off.
+     * @param view
+     */
+    public void onToggle(View view) {
+        atomSelectorGroup.check(view.getId());
+        ((ToggleButton)view).setChecked(true);
+    }
+
+    /**
+     * Listener for updating probability SeekBar's. Handles sending a message when tracking stops
+     * to the server to update probability for selected (this.atomSelectorGroup) atom. Also
+     * handles updating the display (this.probabilityText) with current probability value.
+     * Values may range from 0 to 1 inclusive.
+     */
     SeekBar.OnSeekBarChangeListener seekBarListener = new SeekBar.OnSeekBarChangeListener()
     {
         int progress = 0;
@@ -241,8 +275,8 @@ public class HexAtomProbabilityActivity extends Activity
 
         @Override
         public void onStartTrackingTouch(SeekBar seekBar){
-            if (seekBar instanceof AtomProbabilitySeek){
-                ((AtomProbabilitySeek)seekBar).setIsUpdating(true);
+            if (seekBar instanceof AtomSeekBar){
+                ((AtomSeekBar)seekBar).setIsUpdating(true);
             }
         }
 
@@ -257,13 +291,17 @@ public class HexAtomProbabilityActivity extends Activity
                             Float.toString(prog));
                 }
             }
-            if (seekBar instanceof AtomProbabilitySeek){
-                ((AtomProbabilitySeek)seekBar).setIsUpdating(false);
+            if (seekBar instanceof AtomSeekBar){
+                ((AtomSeekBar)seekBar).setIsUpdating(false);
             }
         }
     };
 
-
+    /**
+     * Helper function for setting probability sliders (this.probabilityBars) to the correct
+     * saved value. Used when an atom is toggled.
+     * @param atomNumber
+     */
     public void updateProbabilities(int atomNumber){
         for(int i=0;i<this.probabilityValues.elementAt(atomNumber).size();i++){
             int num =  this.probabilityValues.elementAt(atomNumber).elementAt(i);

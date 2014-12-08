@@ -1,5 +1,11 @@
 package com.hexatom.gui.hexatomgui;
 
+/**
+ * @author  Cory Ma
+ * @version 1.0
+ * @since   2014-12-5
+ */
+
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.GestureDetector;
