@@ -326,7 +326,7 @@ public class HexAtomProbabilityActivity extends Activity
             {
                 Log.i("ConnectToServerActivity", "Bind to service ServerProxy was unsuccessful.");
             }else{
-
+                //register callback's for remote listening
                 HexAtomProbabilityActivity.serverProxy.probabilityRegister
                         (probabilityBars,atomSelectorGroup);
             }

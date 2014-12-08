@@ -284,23 +284,23 @@ public class ServerProxy extends Service {
                     }else if(key.substring(0,Math.min(key.length(),3)).equals("pfi")){
                         int val = (int)((new Float(value) * 100));
                         int atom = Integer.parseInt(key.substring(3));
-                        updateProbability(atom,6,val);
+                        updateProbability(atom,5,val);
                     }else if(key.substring(0,Math.min(key.length(),3)).equals("pft")){
                         int val = (int)((new Float(value) * 100));
                         int atom = Integer.parseInt(key.substring(3));
-                        updateProbability(atom,7,val);
+                        updateProbability(atom,6,val);
                     }else if(key.substring(0,Math.min(key.length(),3)).equals("pfu")){
                         int val = (int)((new Float(value) * 100));
                         int atom = Integer.parseInt(key.substring(3));
-                        updateProbability(atom,8,val);
+                        updateProbability(atom,7,val);
                     }else if(key.substring(0,Math.min(key.length(),3)).equals("pvf")){
                         int val = (int)((new Float(value) * 100));
                         int atom = Integer.parseInt(key.substring(3));
-                        updateProbability(atom,9,val);
+                        updateProbability(atom,8,val);
                     }else if(key.substring(0,Math.min(key.length(),3)).equals("pxu")) {
                         int val = (int) ((new Float(value) * 100));
                         int atom = Integer.parseInt(key.substring(3));
-                        updateProbability(atom, 10, val);
+                        updateProbability(atom, 9, val);
                     }else if(key.substring(0,Math.min(key.length(),11)).equals("diameterMax")) {
                         updateMaxDiameter(value);
                     }else if(key.substring(0,Math.min(key.length(),8)).equals("diameter")) {

@@ -29,7 +29,7 @@
             android:paddingLeft="20dp"
             android:hint="@string/ip"
             android:background="@color/White"
-            android:inputType="number"/>
+            android:inputType="phone"/>
 
         <EditText
             android:id="@+id/PortEntry"

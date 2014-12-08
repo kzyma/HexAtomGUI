@@ -340,7 +340,7 @@ public class HexAtomGenerateActivity extends Activity
             {
                 Log.i("ConnectToServerActivity", "Bind to service ServerProxy was unsuccessful.");
             }else{
-                //Generate Callbacks
+                //register callback's for remote listening
                 HexAtomGenerateActivity.serverProxy.tempoRegister(tempo);
                 HexAtomGenerateActivity.serverProxy.erasureRegister(erasure);
                 HexAtomGenerateActivity.serverProxy.maxDiameterRegister(maxDiameterButton);
